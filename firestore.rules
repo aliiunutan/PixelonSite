@@ -1,0 +1,118 @@
+// ===============================================================
+// Assumed Data Model
+// ===============================================================
+//
+// Collection: shoots
+// Fields: kisi_id, firma_id, paket_id, cekim_turu_id, baslangic_tarihi, bitis_tarihi, durum, notlar, kayit_tarihi
+//
+// Collection: shoot_types
+// Fields: ad, aciklama, kayit_tarihi
+//
+// Collection: companies
+// Fields: firma_adi, adres, telefon, notlar, kayit_tarihi
+//
+// Collection: people
+// Fields: ad, soyad, telefon, email, sifre, telegram_kullanici, tip, firma_id, notlar, kayit_tarihi
+//
+// Collection: reviews
+// Fields: musteri_id, firma_id, ad_soyad, yorum, puan, durum, created_at
+//
+// Collection: tasks
+// Fields: cekim_id, kisi_id, firma_id, gorev_adi, aciklama, son_tarih, durum, kayit_tarihi
+//
+// Collection: payments
+// Fields: cekim_id, kisi_id, firma_id, toplam_tutar, kapora, odeme_tarihi, odeme_durumu, notlar, kayit_tarihi
+//
+// Collection: packages
+// Fields: paket_adi, icerik, paket_fiyati, notlar, kayit_tarihi
+//
+// ===============================================================
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() &&
+        (get(/databases/$(database)/documents/people/$(request.auth.uid)).data.tip == 'yonetici' ||
+         (request.auth.token.email == "siirbass@gmail.com" && request.auth.token.email_verified == true));
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function hasOnlyAllowedFields(fields) {
+      return request.resource.data.keys().hasOnly(fields);
+    }
+
+    function hasRequiredFields(fields) {
+      return request.resource.data.keys().hasAll(fields);
+    }
+
+    // ===============================================================
+    // Collection Rules
+    // ===============================================================
+
+    match /people/{personId} {
+      allow read: if isAuthenticated() && (isOwner(personId) || isAdmin());
+      allow create: if isAuthenticated() && (isOwner(personId) || isAdmin());
+      allow update: if isAuthenticated() && (isOwner(personId) || isAdmin());
+      allow delete: if isAdmin();
+    }
+
+    match /companies/{companyId} {
+      allow read: if true; // Publicly viewable for info
+      allow write: if isAdmin();
+    }
+
+    match /shoot_types/{typeId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /packages/{packageId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /shoots/{shootId} {
+      allow read: if isAuthenticated() && (request.auth.uid == resource.data.kisi_id || isAdmin());
+      allow create: if isAuthenticated(); // Allow users to request shoots
+      allow update, delete: if isAdmin();
+    }
+
+    match /reviews/{reviewId} {
+      allow read: if resource.data.durum == 'aktif' || isAdmin();
+      allow create: if true; // Allow anyone to submit a review
+      allow update, delete: if isAdmin();
+    }
+
+    match /tasks/{taskId} {
+      allow read, write: if isAdmin();
+    }
+
+    match /payments/{paymentId} {
+      allow read: if isAuthenticated() && (request.auth.uid == resource.data.kisi_id || isAdmin());
+      allow write: if isAdmin();
+    }
+
+    match /firm_pricing/{pricingId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Default deny
+    match /{path=**} {
+      allow read, write: if false;
+    }
+  }
+}

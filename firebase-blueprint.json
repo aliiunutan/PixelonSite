@@ -1,0 +1,148 @@
+{
+  "entities": {
+    "Shoot": {
+      "title": "Shoot",
+      "description": "Photography shoot record",
+      "type": "object",
+      "properties": {
+        "kisi_id": { "type": "string", "description": "Reference to Person ID" },
+        "firma_id": { "type": "string", "description": "Reference to Company ID" },
+        "paket_id": { "type": "string", "description": "Reference to Package ID" },
+        "cekim_turu_id": { "type": "string", "description": "Reference to Shoot Type ID" },
+        "baslangic_tarihi": { "type": "string", "format": "date-time" },
+        "bitis_tarihi": { "type": "string", "format": "date-time" },
+        "durum": { "type": "string", "enum": ["rezervasyon", "cekim_yapildi", "montaj", "tamamlandi"] },
+        "notlar": { "type": "string" },
+        "kayit_tarihi": { "type": "string", "format": "date-time" }
+      },
+      "required": ["firma_id", "paket_id", "baslangic_tarihi"]
+    },
+    "ShootType": {
+      "title": "ShootType",
+      "description": "Types of photography shoots",
+      "type": "object",
+      "properties": {
+        "ad": { "type": "string" },
+        "aciklama": { "type": "string" },
+        "kayit_tarihi": { "type": "string", "format": "date-time" }
+      },
+      "required": ["ad"]
+    },
+    "Company": {
+      "title": "Company",
+      "description": "Client or partner company",
+      "type": "object",
+      "properties": {
+        "firma_adi": { "type": "string" },
+        "adres": { "type": "string" },
+        "telefon": { "type": "string" },
+        "notlar": { "type": "string" },
+        "kayit_tarihi": { "type": "string", "format": "date-time" }
+      },
+      "required": ["firma_adi"]
+    },
+    "Person": {
+      "title": "Person",
+      "description": "User or client record",
+      "type": "object",
+      "properties": {
+        "ad": { "type": "string" },
+        "soyad": { "type": "string" },
+        "telefon": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "sifre": { "type": "string", "description": "Login password" },
+        "telegram_kullanici": { "type": "string" },
+        "tip": { "type": "string", "enum": ["musteri", "firma_yetkilisi", "yonetici"] },
+        "firma_id": { "type": "string" },
+        "notlar": { "type": "string" },
+        "kayit_tarihi": { "type": "string", "format": "date-time" }
+      },
+      "required": ["ad", "soyad", "tip"]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "Customer review",
+      "type": "object",
+      "properties": {
+        "musteri_id": { "type": "string" },
+        "firma_id": { "type": "string" },
+        "ad_soyad": { "type": "string" },
+        "yorum": { "type": "string" },
+        "puan": { "type": "integer" },
+        "durum": { "type": "string", "enum": ["aktif", "pasif", "beklemede"] },
+        "created_at": { "type": "string", "format": "date-time" }
+      },
+      "required": ["yorum", "puan"]
+    },
+    "Task": {
+      "title": "Task",
+      "description": "Note or task for a shoot",
+      "type": "object",
+      "properties": {
+        "cekim_id": { "type": "string" },
+        "kisi_id": { "type": "string" },
+        "firma_id": { "type": "string" },
+        "gorev_adi": { "type": "string" },
+        "aciklama": { "type": "string" },
+        "son_tarih": { "type": "string", "format": "date" },
+        "durum": { "type": "string", "enum": ["beklemede", "tamamlandi"] },
+        "kayit_tarihi": { "type": "string", "format": "date-time" }
+      },
+      "required": ["gorev_adi"]
+    },
+    "Payment": {
+      "title": "Payment",
+      "description": "Payment and invoice record",
+      "type": "object",
+      "properties": {
+        "cekim_id": { "type": "string" },
+        "kisi_id": { "type": "string" },
+        "firma_id": { "type": "string" },
+        "toplam_tutar": { "type": "number" },
+        "kapora": { "type": "number" },
+        "odeme_tarihi": { "type": "string", "format": "date" },
+        "odeme_durumu": { "type": "string", "enum": ["beklemede", "kismi_odendi", "tamamlandi"] },
+        "notlar": { "type": "string" },
+        "kayit_tarihi": { "type": "string", "format": "date-time" }
+      },
+      "required": ["cekim_id", "firma_id", "toplam_tutar"]
+    },
+    "Package": {
+      "title": "Package",
+      "description": "Photography service package",
+      "type": "object",
+      "properties": {
+        "paket_adi": { "type": "string" },
+        "icerik": { "type": "string" },
+        "paket_fiyati": { "type": "number" },
+        "notlar": { "type": "string" },
+        "kayit_tarihi": { "type": "string", "format": "date-time" }
+      },
+      "required": ["paket_adi", "icerik", "paket_fiyati"]
+    },
+    "FirmPricing": {
+      "title": "FirmPricing",
+      "description": "Special package pricing for specific firms",
+      "type": "object",
+      "properties": {
+        "firma_id": { "type": "string" },
+        "paket_id": { "type": "string" },
+        "ozel_fiyat": { "type": "number" },
+        "firma_ad": { "type": "string" },
+        "paket_ad": { "type": "string" }
+      },
+      "required": ["firma_id", "paket_id", "ozel_fiyat"]
+    }
+  },
+  "firestore": {
+    "shoots": { "schema": "Shoot", "description": "Collection of photography shoots" },
+    "shoot_types": { "schema": "ShootType", "description": "Collection of shoot types" },
+    "companies": { "schema": "Company", "description": "Collection of companies" },
+    "people": { "schema": "Person", "description": "Collection of people (users/clients)" },
+    "reviews": { "schema": "Review", "description": "Collection of customer reviews" },
+    "tasks": { "schema": "Task", "description": "Collection of tasks and notes" },
+    "payments": { "schema": "Payment", "description": "Collection of payments and invoices" },
+    "packages": { "schema": "Package", "description": "Collection of service packages" },
+    "firm_pricing": { "schema": "FirmPricing", "description": "Collection of firm-specific package pricing" }
+  }
+}
