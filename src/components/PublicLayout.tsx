@@ -32,7 +32,12 @@ const PublicLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
             <Link to="/" className="flex items-center gap-2">
-              <Camera className="w-8 h-8 text-primary" />
+              <img 
+                src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=128&h=128&fit=crop" 
+                alt="Pixelon Medya Logo" 
+                className="w-10 h-10 rounded-lg object-cover"
+                referrerPolicy="no-referrer"
+              />
               <span className="text-xl font-bold tracking-tight dark:text-white">Pixelon Medya</span>
             </Link>
 
@@ -142,7 +147,12 @@ const PublicLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <Camera className="w-6 h-6 text-primary" />
+                <img 
+                  src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=128&h=128&fit=crop" 
+                  alt="Pixelon Medya Logo" 
+                  className="w-8 h-8 rounded-md object-cover"
+                  referrerPolicy="no-referrer"
+                />
                 <span className="text-lg font-bold">Pixelon Medya</span>
               </div>
               <p className="text-slate-400 text-sm">

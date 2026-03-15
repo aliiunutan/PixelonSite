@@ -48,7 +48,6 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     { id: 'tasks', label: 'Not & Görevler', icon: ClipboardList, path: '/admin/gorevler' },
     { id: 'payments', label: 'Ödeme & Fatura', icon: TurkishLira, path: '/admin/odemeler' },
     { id: 'reports', label: 'Raporlar & Grafikler', icon: BarChart3, path: '/admin/raporlar' },
-    { id: 'database', label: 'Veritabanı Güncelle', icon: Settings, path: '/admin/veritabani-guncelle' },
     { id: 'website', label: 'Web Sitesine Git', icon: ExternalLink, path: '/', external: true },
   ];
 
@@ -65,7 +64,17 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       {/* Sidebar */}
       <aside className={`bg-slate-900 text-white transition-all duration-300 flex flex-col z-20 ${isSidebarOpen ? 'w-64' : 'w-20'}`}>
         <div className="p-4 flex items-center justify-between border-b border-slate-800">
-          {isSidebarOpen && <span className="font-bold text-lg truncate">Pixelon Admin</span>}
+          {isSidebarOpen && (
+            <div className="flex items-center gap-2 truncate">
+              <img 
+                src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=128&h=128&fit=crop" 
+                alt="Logo" 
+                className="w-8 h-8 rounded-md object-cover"
+                referrerPolicy="no-referrer"
+              />
+              <span className="font-bold text-lg">Pixelon Admin</span>
+            </div>
+          )}
           <button onClick={() => setIsSidebarOpen(!isSidebarOpen)} className="p-1 hover:bg-slate-800 rounded">
             {isSidebarOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
