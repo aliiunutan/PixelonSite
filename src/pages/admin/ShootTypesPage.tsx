@@ -67,7 +67,7 @@ const ShootTypesPage = () => {
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <h2 className="text-2xl font-bold text-slate-800">Çekim Türleri</h2>
+        <h2 className="text-2xl font-bold text-slate-800 dark:text-white">Çekim Türleri</h2>
         <div className="flex gap-4 w-full sm:w-auto">
           <div className="relative flex-grow sm:w-64">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
@@ -76,7 +76,7 @@ const ShootTypesPage = () => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Tür ara..." 
-              className="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-200 outline-none focus:ring-2 focus:ring-primary"
+              className="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
           <button onClick={() => handleOpenModal()} className="btn-primary flex items-center gap-2 whitespace-nowrap">
@@ -88,26 +88,26 @@ const ShootTypesPage = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredTypes.map((type) => (
-          <div key={type.id} className="card p-6 group">
+          <div key={type.id} className="card p-6 group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
             <div className="flex justify-between items-start mb-4">
               <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary">
                 <CameraIcon size={24} />
               </div>
               <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                <button onClick={() => handleOpenModal(type)} className="p-2 text-slate-400 hover:text-primary rounded-lg transition-colors">
+                <button onClick={() => handleOpenModal(type)} className="p-2 text-slate-400 hover:text-primary dark:hover:bg-slate-800 rounded-lg transition-colors">
                   <Edit2 size={16} />
                 </button>
-                <button onClick={() => handleDelete(type.id)} className="p-2 text-slate-400 hover:text-rose-600 rounded-lg transition-colors">
+                <button onClick={() => handleDelete(type.id)} className="p-2 text-slate-400 hover:text-rose-600 dark:hover:bg-slate-800 rounded-lg transition-colors">
                   <Trash2 size={16} />
                 </button>
               </div>
             </div>
-            <h3 className="text-lg font-bold text-slate-900 mb-2">{type.ad}</h3>
-            <p className="text-sm text-slate-500 mb-4 h-10 line-clamp-2">
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">{type.ad}</h3>
+            <p className="text-sm text-slate-500 dark:text-slate-400 mb-4 h-10 line-clamp-2">
               {type.aciklama || 'Açıklama belirtilmemiş.'}
             </p>
-            <div className="pt-4 border-t border-slate-100 flex justify-between items-center">
-              <span className="text-xs font-bold text-slate-400 uppercase">ID: #{type.id.slice(0, 8)}</span>
+            <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex justify-between items-center">
+              <span className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase">ID: #{type.id.slice(0, 8)}</span>
             </div>
           </div>
         ))}
@@ -120,22 +120,22 @@ const ShootTypesPage = () => {
       >
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Tür Adı</label>
+            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Tür Adı</label>
             <input 
               type="text" 
               required
               value={formData.ad}
               onChange={(e) => setFormData({...formData, ad: e.target.value})}
-              className="w-full px-4 py-2 rounded-lg border border-slate-200 outline-none focus:ring-2 focus:ring-primary"
+              className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-primary"
               placeholder="Örn: Düğün, Nişan, Dış Çekim"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Açıklama</label>
+            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Açıklama</label>
             <textarea 
               value={formData.aciklama}
               onChange={(e) => setFormData({...formData, aciklama: e.target.value})}
-              className="w-full px-4 py-2 rounded-lg border border-slate-200 outline-none focus:ring-2 focus:ring-primary h-32 resize-none"
+              className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-primary h-32 resize-none"
               placeholder="Tür hakkında kısa bilgi..."
             />
           </div>

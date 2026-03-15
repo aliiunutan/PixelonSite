@@ -3,16 +3,28 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
   LayoutDashboard, Users, Building2, Camera, Calendar, 
   Package, DollarSign, MessageSquare, ClipboardList, 
-  ChevronDown, LogOut, Menu, X, Palette, Settings, ExternalLink
+  ChevronDown, LogOut, Menu, X, Palette, Settings, ExternalLink, Moon, Sun
 } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import { useFirebase } from '../context/FirebaseContext';
+import { auth, signOut } from '../firebase';
 
 const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
   const location = useLocation();
   const navigate = useNavigate();
-  const { setThemeColor } = useTheme();
+  const { setThemeColor, isDarkMode, toggleDarkMode } = useTheme();
+  const { user } = useFirebase();
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigate('/');
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
+  };
 
   const toggleMenu = (id: string) => {
     setOpenMenus(prev => ({ ...prev, [id]: !prev[id] }));
@@ -60,7 +72,6 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     { id: 'tasks', label: 'Not & Görevler', icon: ClipboardList, path: '/admin/gorevler' },
     { id: 'payments', label: 'Ödeme & Fatura', icon: DollarSign, path: '/admin/odemeler' },
     { id: 'website', label: 'Web Sitesine Git', icon: ExternalLink, path: '/', external: true },
-    { id: 'website-home', label: 'Web Sitesi Ana Sayfa', icon: LayoutDashboard, path: '/', external: true },
   ];
 
   const themeOptions = [
@@ -72,9 +83,9 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   ];
 
   return (
-    <div className="min-h-screen flex bg-slate-50">
+    <div className="min-h-screen flex bg-slate-50 dark:bg-slate-950 transition-colors duration-200">
       {/* Sidebar */}
-      <aside className={`bg-slate-900 text-white transition-all duration-300 flex flex-col ${isSidebarOpen ? 'w-64' : 'w-20'}`}>
+      <aside className={`bg-slate-900 text-white transition-all duration-300 flex flex-col z-20 ${isSidebarOpen ? 'w-64' : 'w-20'}`}>
         <div className="p-4 flex items-center justify-between border-b border-slate-800">
           {isSidebarOpen && <span className="font-bold text-lg truncate">Pixelon Admin</span>}
           <button onClick={() => setIsSidebarOpen(!isSidebarOpen)} className="p-1 hover:bg-slate-800 rounded">
@@ -145,7 +156,7 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             </div>
           </div>
           <button 
-            onClick={() => navigate('/')}
+            onClick={handleLogout}
             className={`w-full flex items-center gap-3 p-2 mt-2 rounded-lg hover:bg-red-900/20 text-red-400 transition-colors ${!isSidebarOpen && 'justify-center'}`}
           >
             <LogOut size={20} />
@@ -156,17 +167,24 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
       {/* Main Content */}
       <main className="flex-grow flex flex-col h-screen overflow-hidden">
-        <header className="bg-white h-16 border-b border-slate-200 flex items-center justify-between px-8 shrink-0">
-          <h1 className="text-lg font-semibold text-slate-800">
+        <header className="bg-white dark:bg-slate-900 h-16 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-8 shrink-0 transition-colors duration-200">
+          <h1 className="text-lg font-semibold text-slate-800 dark:text-white">
             {menuItems.find(m => m.path === location.pathname || m.children?.some(c => c.path === location.pathname))?.label || 'Admin Paneli'}
           </h1>
           <div className="flex items-center gap-4">
+            <button 
+              onClick={toggleDarkMode}
+              className="p-2 text-slate-400 hover:text-primary transition-colors"
+              title={isDarkMode ? "Açık Tema" : "Koyu Tema"}
+            >
+              {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            </button>
             <div className="text-right hidden sm:block">
-              <p className="text-sm font-medium text-slate-900">Ali Unutan</p>
-              <p className="text-xs text-slate-500">Yönetici</p>
+              <p className="text-sm font-medium text-slate-900 dark:text-white">{user?.displayName || user?.email?.split('@')[0] || 'Yönetici'}</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Yönetici</p>
             </div>
-            <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
-              AU
+            <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold uppercase">
+              {(user?.displayName || user?.email || 'Y').charAt(0)}
             </div>
           </div>
         </header>

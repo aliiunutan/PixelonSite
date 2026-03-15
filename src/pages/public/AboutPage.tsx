@@ -24,11 +24,11 @@ const AboutPage = () => {
             />
           </div>
           <div className="space-y-6">
-            <h2 className="text-3xl font-bold text-slate-900">Hikayemiz</h2>
-            <p className="text-slate-600 leading-relaxed">
+            <h2 className="text-3xl font-bold text-slate-900 dark:text-white">Hikayemiz</h2>
+            <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
               Yıllar önce bir tutkuyla başlayan yolculuğumuz, bugün yüzlerce mutlu çiftin en özel anlarına tanıklık eden profesyonel bir ekibe dönüştü. Pixelon Medya, sadece fotoğraf çekmek değil, o anın duygusunu ve heyecanını yıllar sonrasına taşıyacak hikayeler yaratmak için kuruldu.
             </p>
-            <p className="text-slate-600 leading-relaxed">
+            <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
               Teknolojiyi yakından takip eden ekipmanlarımız ve sanatsal bakış açımızla, her çekimi kendine has bir sanat eserine dönüştürüyoruz. Düğün, nişan, kına ve özel organizasyonlarda, sizin heyecanınızı paylaşıyor ve en doğal halinizi karelere sığdırıyoruz.
             </p>
             <div className="grid grid-cols-2 gap-6 pt-6">
@@ -36,32 +36,32 @@ const AboutPage = () => {
                 <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
                   <Award size={20} />
                 </div>
-                <span className="font-semibold text-sm">Yüksek Kalite</span>
+                <span className="font-semibold text-sm dark:text-slate-300">Yüksek Kalite</span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
                   <Heart size={20} />
                 </div>
-                <span className="font-semibold text-sm">Tutkuyla Çekim</span>
+                <span className="font-semibold text-sm dark:text-slate-300">Tutkuyla Çekim</span>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="bg-slate-50 py-20">
+      <section className="bg-slate-50 dark:bg-slate-900 py-20">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold">Vizyonumuz & Misyonumuz</h2>
+            <h2 className="text-3xl font-bold dark:text-white">Vizyonumuz & Misyonumuz</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="card p-8 bg-white">
+            <div className="card p-8 bg-white dark:bg-slate-800">
               <h3 className="text-xl font-bold mb-4 text-primary">Misyonumuz</h3>
-              <p className="text-slate-600">Müşterilerimizin en özel günlerini, beklentilerinin ötesinde bir kalite ve profesyonellik ile kaydederek, nesiller boyu saklanacak anılar oluşturmak.</p>
+              <p className="text-slate-600 dark:text-slate-400">Müşterilerimizin en özel günlerini, beklentilerinin ötesinde bir kalite ve profesyonellik ile kaydederek, nesiller boyu saklanacak anılar oluşturmak.</p>
             </div>
-            <div className="card p-8 bg-white">
+            <div className="card p-8 bg-white dark:bg-slate-800">
               <h3 className="text-xl font-bold mb-4 text-primary">Vizyonumuz</h3>
-              <p className="text-slate-600">Türkiye'nin en çok tercih edilen ve sanatsal bakış açısıyla fark yaratan fotoğrafçılık ve prodüksiyon firması olmak.</p>
+              <p className="text-slate-600 dark:text-slate-400">Türkiye'nin en çok tercih edilen ve sanatsal bakış açısıyla fark yaratan fotoğrafçılık ve prodüksiyon firması olmak.</p>
             </div>
           </div>
         </div>

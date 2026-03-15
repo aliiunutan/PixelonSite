@@ -69,8 +69,8 @@ const ServicesPage = () => {
                 <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center text-primary mb-4">
                   <service.icon size={20} />
                 </div>
-                <h3 className="text-xl font-bold mb-2">{service.title}</h3>
-                <p className="text-slate-600 text-sm leading-relaxed mb-6">{service.desc}</p>
+                <h3 className="text-xl font-bold mb-2 dark:text-white">{service.title}</h3>
+                <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6">{service.desc}</p>
                 <Link to="/randevular" className="btn-primary w-full block text-center text-sm">Randevu Al</Link>
               </div>
             </div>

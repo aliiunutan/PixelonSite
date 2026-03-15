@@ -1,12 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Camera, Mail, Lock, Github, Chrome, Instagram, Facebook, ArrowLeft } from 'lucide-react';
 import { auth, googleProvider, signInWithPopup } from '../../firebase';
+import { useFirebase } from '../../context/FirebaseContext';
 
 const LoginPage = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { user } = useFirebase();
+
+  useEffect(() => {
+    if (user) {
+      navigate('/admin');
+    }
+  }, [user, navigate]);
 
   const handleGoogleLogin = async () => {
     setLoading(true);

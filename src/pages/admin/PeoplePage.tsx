@@ -89,15 +89,15 @@ const PeoplePage = () => {
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <h2 className="text-2xl font-bold text-slate-800">Kişi Yönetimi</h2>
+        <h2 className="text-2xl font-bold text-slate-800 dark:text-white">Kişi Yönetimi</h2>
         <button onClick={() => handleOpenModal()} className="btn-primary flex items-center gap-2">
           <Plus size={20} />
           Yeni Kişi Ekle
         </button>
       </div>
 
-      <div className="card">
-        <div className="p-4 border-b border-slate-100 flex flex-col sm:flex-row gap-4">
+      <div className="card bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+        <div className="p-4 border-b border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row gap-4">
           <div className="relative flex-grow">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
             <input 
@@ -105,14 +105,14 @@ const PeoplePage = () => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="İsim, e-posta veya telefon ile ara..." 
-              className="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-200 outline-none focus:ring-2 focus:ring-primary"
+              className="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left">
-            <thead className="bg-slate-50 text-slate-500 text-xs uppercase tracking-wider">
+            <thead className="bg-slate-50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wider">
               <tr>
                 <th className="px-6 py-4 font-bold">Ad Soyad</th>
                 <th className="px-6 py-4 font-bold">İletişim</th>
@@ -121,35 +121,35 @@ const PeoplePage = () => {
                 <th className="px-6 py-4 font-bold text-right">İşlemler</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
               {filteredPeople.map((person) => (
-                <tr key={person.id} className="hover:bg-slate-50 transition-colors">
+                <tr key={person.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
                   <td className="px-6 py-4">
-                    <div className="font-semibold text-slate-900">{person.ad} {person.soyad}</div>
-                    <div className="text-xs text-slate-500">ID: #{person.id.slice(0, 8)}</div>
+                    <div className="font-semibold text-slate-900 dark:text-white">{person.ad} {person.soyad}</div>
+                    <div className="text-xs text-slate-500 dark:text-slate-400">ID: #{person.id.slice(0, 8)}</div>
                   </td>
                   <td className="px-6 py-4">
-                    <div className="text-sm text-slate-700">{person.email || '-'}</div>
-                    <div className="text-xs text-slate-500">{person.telefon || '-'}</div>
+                    <div className="text-sm text-slate-700 dark:text-slate-300">{person.email || '-'}</div>
+                    <div className="text-xs text-slate-500 dark:text-slate-400">{person.telefon || '-'}</div>
                   </td>
                   <td className="px-6 py-4">
                     <span className={`px-2 py-1 rounded-full text-[10px] font-bold uppercase ${
-                      person.tip === 'yonetici' ? 'bg-indigo-100 text-indigo-700' :
-                      person.tip === 'firma_yetkilisi' ? 'bg-amber-100 text-amber-700' :
-                      'bg-emerald-100 text-emerald-700'
+                      person.tip === 'yonetici' ? 'bg-indigo-100 dark:bg-indigo-500/20 text-indigo-700 dark:text-indigo-400' :
+                      person.tip === 'firma_yetkilisi' ? 'bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-400' :
+                      'bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400'
                     }`}>
                       {person.tip === 'yonetici' ? 'Yönetici' : person.tip === 'firma_yetkilisi' ? 'Firma Yetkilisi' : 'Müşteri'}
                     </span>
                   </td>
-                  <td className="px-6 py-4 text-sm text-slate-600">
+                  <td className="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">
                     {companies.find(c => c.id === person.firma_id)?.firma_adi || '-'}
                   </td>
                   <td className="px-6 py-4 text-right">
                     <div className="flex justify-end gap-2">
-                      <button onClick={() => handleOpenModal(person)} className="p-2 text-slate-400 hover:text-primary hover:bg-primary/10 rounded-lg transition-colors">
+                      <button onClick={() => handleOpenModal(person)} className="p-2 text-slate-400 hover:text-primary dark:hover:bg-slate-800 rounded-lg transition-colors">
                         <Edit2 size={16} />
                       </button>
-                      <button onClick={() => handleDelete(person.id)} className="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors">
+                      <button onClick={() => handleDelete(person.id)} className="p-2 text-slate-400 hover:text-rose-600 dark:hover:bg-slate-800 rounded-lg transition-colors">
                         <Trash2 size={16} />
                       </button>
                     </div>
@@ -169,60 +169,60 @@ const PeoplePage = () => {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Ad</label>
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Ad</label>
               <input 
                 type="text" 
                 required
                 value={formData.ad}
                 onChange={(e) => setFormData({...formData, ad: e.target.value})}
-                className="w-full px-4 py-2 rounded-lg border border-slate-200 outline-none focus:ring-2 focus:ring-primary"
+                className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Soyad</label>
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Soyad</label>
               <input 
                 type="text" 
                 required
                 value={formData.soyad}
                 onChange={(e) => setFormData({...formData, soyad: e.target.value})}
-                className="w-full px-4 py-2 rounded-lg border border-slate-200 outline-none focus:ring-2 focus:ring-primary"
+                className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">E-posta</label>
+            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">E-posta</label>
             <input 
               type="email" 
               value={formData.email}
               onChange={(e) => setFormData({...formData, email: e.target.value})}
-              className="w-full px-4 py-2 rounded-lg border border-slate-200 outline-none focus:ring-2 focus:ring-primary"
+              className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Telefon</label>
+            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Telefon</label>
             <input 
               type="tel" 
               value={formData.telefon}
               onChange={(e) => setFormData({...formData, telefon: e.target.value})}
-              className="w-full px-4 py-2 rounded-lg border border-slate-200 outline-none focus:ring-2 focus:ring-primary"
+              className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Şifre</label>
+            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Şifre</label>
             <input 
               type="password" 
               value={formData.sifre}
               onChange={(e) => setFormData({...formData, sifre: e.target.value})}
-              className="w-full px-4 py-2 rounded-lg border border-slate-200 outline-none focus:ring-2 focus:ring-primary"
+              className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-primary"
               placeholder="Giriş şifresi"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Tip</label>
+            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Tip</label>
             <select 
               value={formData.tip}
               onChange={(e) => setFormData({...formData, tip: e.target.value})}
-              className="w-full px-4 py-2 rounded-lg border border-slate-200 outline-none focus:ring-2 focus:ring-primary"
+              className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-primary"
             >
               <option value="musteri">Müşteri</option>
               <option value="firma_yetkilisi">Firma Yetkilisi</option>
@@ -230,11 +230,11 @@ const PeoplePage = () => {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Firma</label>
+            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Firma</label>
             <select 
               value={formData.firma_id}
               onChange={(e) => setFormData({...formData, firma_id: e.target.value})}
-              className="w-full px-4 py-2 rounded-lg border border-slate-200 outline-none focus:ring-2 focus:ring-primary"
+              className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-primary"
             >
               <option value="">Firma Seçin (Opsiyonel)</option>
               {companies.map(c => (

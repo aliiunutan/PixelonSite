@@ -74,7 +74,7 @@ const PackagesPage = () => {
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <h2 className="text-2xl font-bold text-slate-800">Paket Yönetimi</h2>
+        <h2 className="text-2xl font-bold text-slate-800 dark:text-white">Paket Yönetimi</h2>
         <div className="flex gap-4 w-full sm:w-auto">
           <div className="relative flex-grow sm:w-64">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
@@ -83,7 +83,7 @@ const PackagesPage = () => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Paket ara..." 
-              className="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-200 outline-none focus:ring-2 focus:ring-primary"
+              className="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
           <button onClick={() => handleOpenModal()} className="btn-primary flex items-center gap-2 whitespace-nowrap">
@@ -95,28 +95,28 @@ const PackagesPage = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {filteredPackages.map((pkg) => (
-          <div key={pkg.id} className="card p-8 flex flex-col justify-between border-t-4 border-t-primary">
+          <div key={pkg.id} className="card p-8 flex flex-col justify-between border-t-4 border-t-primary bg-white dark:bg-slate-900 border-x border-b border-x-slate-200 border-b-slate-200 dark:border-x-slate-800 dark:border-b-slate-800">
             <div>
               <div className="flex justify-between items-start mb-6">
                 <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center text-primary">
                   <PackageIcon size={28} />
                 </div>
                 <div className="flex gap-2">
-                  <button onClick={() => handleOpenModal(pkg)} className="p-2 text-slate-400 hover:text-primary rounded-lg transition-colors">
+                  <button onClick={() => handleOpenModal(pkg)} className="p-2 text-slate-400 hover:text-primary dark:hover:bg-slate-800 rounded-lg transition-colors">
                     <Edit2 size={18} />
                   </button>
-                  <button onClick={() => handleDelete(pkg.id)} className="p-2 text-slate-400 hover:text-rose-600 rounded-lg transition-colors">
+                  <button onClick={() => handleDelete(pkg.id)} className="p-2 text-slate-400 hover:text-rose-600 dark:hover:bg-slate-800 rounded-lg transition-colors">
                     <Trash2 size={18} />
                   </button>
                 </div>
               </div>
-              <h3 className="text-2xl font-bold text-slate-900 mb-2">{pkg.paket_adi}</h3>
+              <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">{pkg.paket_adi}</h3>
               <div className="text-3xl font-extrabold text-primary mb-6">₺{pkg.paket_fiyati.toLocaleString('tr-TR')}</div>
               <div className="space-y-3 mb-8">
-                <p className="text-sm font-semibold text-slate-400 uppercase tracking-wider">Paket İçeriği</p>
+                <p className="text-sm font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Paket İçeriği</p>
                 <ul className="space-y-2">
                   {pkg.icerik?.split('\n').map((line: string, i: number) => (
-                    <li key={i} className="text-sm text-slate-600 flex items-start gap-2">
+                    <li key={i} className="text-sm text-slate-600 dark:text-slate-300 flex items-start gap-2">
                       <div className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0" />
                       {line}
                     </li>
@@ -124,8 +124,8 @@ const PackagesPage = () => {
                 </ul>
               </div>
             </div>
-            <div className="pt-6 border-t border-slate-100 flex justify-between items-center">
-              <span className="text-xs font-bold text-slate-400 uppercase">ID: #{pkg.id.slice(0, 8)}</span>
+            <div className="pt-6 border-t border-slate-100 dark:border-slate-800 flex justify-between items-center">
+              <span className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase">ID: #{pkg.id.slice(0, 8)}</span>
             </div>
           </div>
         ))}
@@ -138,32 +138,32 @@ const PackagesPage = () => {
       >
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Paket Adı</label>
+            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Paket Adı</label>
             <input 
               type="text" 
               required
               value={formData.paket_adi}
               onChange={(e) => setFormData({...formData, paket_adi: e.target.value})}
-              className="w-full px-4 py-2 rounded-lg border border-slate-200 outline-none focus:ring-2 focus:ring-primary"
+              className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Fiyat (₺)</label>
+            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Fiyat (₺)</label>
             <input 
               type="number" 
               required
               value={formData.paket_fiyati}
               onChange={(e) => setFormData({...formData, paket_fiyati: Number(e.target.value)})}
-              className="w-full px-4 py-2 rounded-lg border border-slate-200 outline-none focus:ring-2 focus:ring-primary"
+              className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">İçerik (Her satıra bir özellik)</label>
+            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">İçerik (Her satıra bir özellik)</label>
             <textarea 
               required
               value={formData.icerik}
               onChange={(e) => setFormData({...formData, icerik: e.target.value})}
-              className="w-full px-4 py-2 rounded-lg border border-slate-200 outline-none focus:ring-2 focus:ring-primary h-48 resize-none"
+              className="w-full px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-primary h-48 resize-none"
               placeholder="Örn: 10 Adet Baskı&#10;Tüm Dijital Teslimat&#10;1 Saat Çekim"
             />
           </div>

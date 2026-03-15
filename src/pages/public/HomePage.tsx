@@ -1,8 +1,61 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Camera, Star, Calendar, Clock, CheckCircle, ArrowRight } from 'lucide-react';
+import { Camera, Star, Calendar, Clock, CheckCircle, ArrowRight, Quote } from 'lucide-react';
+import { collection, query, where, orderBy, limit, getDocs } from 'firebase/firestore';
+import { db } from '../../firebase';
 
 const HomePage = () => {
+  const [recentReviews, setRecentReviews] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const q = query(
+          collection(db, 'reviews'),
+          where('status', '==', 'approved'),
+          orderBy('createdAt', 'desc'),
+          limit(3)
+        );
+        const querySnapshot = await getDocs(q);
+        const reviewsData = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        setRecentReviews(reviewsData);
+      } catch (error) {
+        console.error("Error fetching recent reviews:", error);
+      }
+    };
+
+    fetchReviews();
+  }, []);
+
+  const dummyReviews = [
+    {
+      id: 'dummy-1',
+      rating: 5,
+      comment: 'Harika bir çekimdi, ekibin enerjisi bizi çok rahatlattı. Fotoğraflar beklediğimizden de güzel geldi! Kesinlikle tavsiye ediyoruz.',
+      authorName: 'Ayşe & Ahmet',
+      createdAt: { toDate: () => new Date('2023-08-15') }
+    },
+    {
+      id: 'dummy-2',
+      rating: 5,
+      comment: 'Düğün hikayemiz tam bir film gibi olmuş. Her izlediğimizde o güne geri dönüyoruz. Emeğinize sağlık, çok teşekkürler.',
+      authorName: 'Zeynep & Can',
+      createdAt: { toDate: () => new Date('2023-09-02') }
+    },
+    {
+      id: 'dummy-3',
+      rating: 5,
+      comment: 'Dış çekim mekan önerileri çok iyiydi. Çok eğlenceli bir gün geçirdik, sonuçlar da muazzam. Herkese tavsiye ederim.',
+      authorName: 'Elif & Burak',
+      createdAt: { toDate: () => new Date('2023-09-20') }
+    }
+  ];
+
+  const displayReviews = recentReviews.length > 0 ? recentReviews : dummyReviews;
+
   return (
     <div className="space-y-20 pb-20">
       {/* Hero Section */}
@@ -30,8 +83,8 @@ const HomePage = () => {
       {/* Services Preview */}
       <section className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">Neler Yapıyoruz?</h2>
-          <p className="text-slate-600 max-w-2xl mx-auto">En mutlu günlerinizde, en güzel kareleri yakalamak için buradayız.</p>
+          <h2 className="text-3xl font-bold mb-4 dark:text-white">Neler Yapıyoruz?</h2>
+          <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">En mutlu günlerinizde, en güzel kareleri yakalamak için buradayız.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
@@ -43,8 +96,8 @@ const HomePage = () => {
               <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform">
                 <service.icon size={24} />
               </div>
-              <h3 className="text-xl font-bold mb-3">{service.title}</h3>
-              <p className="text-slate-600 text-sm leading-relaxed mb-6">{service.desc}</p>
+              <h3 className="text-xl font-bold mb-3 dark:text-white">{service.title}</h3>
+              <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6">{service.desc}</p>
               <Link to="/hizmetler" className="text-primary font-semibold text-sm flex items-center gap-2">
                 Detaylı Bilgi <ArrowRight size={16} />
               </Link>
@@ -54,7 +107,7 @@ const HomePage = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="bg-slate-900 py-20 text-white">
+      <section className="bg-slate-900 dark:bg-slate-950 py-20 text-white">
         <div className="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           <div>
             <div className="text-4xl font-bold text-primary mb-2">500+</div>
@@ -74,6 +127,47 @@ const HomePage = () => {
           </div>
         </div>
       </section>
+
+      {/* Reviews Section */}
+      {displayReviews.length > 0 && (
+        <section className="max-w-7xl mx-auto px-4 py-12">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold mb-4 dark:text-white">Müşteri Yorumları</h2>
+            <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">Bizimle çalışan çiftlerimizin deneyimleri.</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {displayReviews.map((review) => (
+              <div key={review.id} className="card p-8 relative">
+                <Quote className="absolute top-6 right-6 text-slate-100 dark:text-slate-800 w-12 h-12" />
+                <div className="flex items-center gap-1 mb-4 relative z-10">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <Star
+                      key={star}
+                      size={16}
+                      className={star <= review.rating ? "fill-amber-400 text-amber-400" : "fill-transparent text-slate-300 dark:text-slate-600"}
+                    />
+                  ))}
+                </div>
+                <p className="text-slate-600 dark:text-slate-300 mb-6 relative z-10 italic">"{review.comment}"</p>
+                <div className="flex items-center gap-3 relative z-10">
+                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold uppercase">
+                    {review.authorName.charAt(0)}
+                  </div>
+                  <div>
+                    <p className="font-bold text-slate-900 dark:text-white">{review.authorName}</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">{new Date(review.createdAt?.toDate()).toLocaleDateString('tr-TR')}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="text-center mt-10">
+            <Link to="/yorumlar" className="btn-secondary inline-flex items-center gap-2">
+              Tüm Yorumları Gör <ArrowRight size={16} />
+            </Link>
+          </div>
+        </section>
+      )}
 
       {/* CTA Section */}
       <section className="max-w-5xl mx-auto px-4">
