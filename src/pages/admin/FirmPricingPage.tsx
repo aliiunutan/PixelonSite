@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Search, Edit2, Trash2, Building2, Package, DollarSign } from 'lucide-react';
+import { Plus, Search, Edit2, Trash2, Building2, Package, TurkishLira } from 'lucide-react';
 import { subscribeToCollection, addItem, updateItem, deleteItem } from '../../services/firebaseService';
 import Modal from '../../components/Modal';
 
@@ -137,7 +137,7 @@ const FirmPricingPage = () => {
                   </td>
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-2">
-                      <DollarSign size={14} className="text-emerald-500 dark:text-emerald-400" />
+                      <TurkishLira size={14} className="text-emerald-500 dark:text-emerald-400" />
                       <span className="text-sm font-bold text-slate-900 dark:text-white">{pricing.ozel_fiyat} ₺</span>
                     </div>
                   </td>

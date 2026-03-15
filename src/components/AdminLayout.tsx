@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
   LayoutDashboard, Users, Building2, Camera, Calendar, 
-  Package, DollarSign, MessageSquare, ClipboardList, 
-  ChevronDown, LogOut, Menu, X, Palette, Settings, ExternalLink, Moon, Sun
+  Package, TurkishLira, MessageSquare, ClipboardList, 
+  ChevronDown, LogOut, Menu, X, Palette, Settings, ExternalLink, Moon, Sun,
+  BarChart3
 } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { useFirebase } from '../context/FirebaseContext';
@@ -32,35 +33,10 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
   const menuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, path: '/admin' },
-    { 
-      id: 'people', label: 'Kişi Yönetimi', icon: Users, 
-      children: [
-        { label: 'Kişi Listesi', path: '/admin/kisiler' },
-        { label: 'Yeni Kişi Ekle', path: '/admin/kisiler/yeni' }
-      ]
-    },
-    { 
-      id: 'companies', label: 'Firma Yönetimi', icon: Building2,
-      children: [
-        { label: 'Firma Listesi', path: '/admin/firmalar' },
-        { label: 'Yeni Firma Ekle', path: '/admin/firmalar/yeni' }
-      ]
-    },
-    { 
-      id: 'shoot-types', label: 'Çekim Türleri', icon: Camera,
-      children: [
-        { label: 'Tür Listesi', path: '/admin/cekim-turleri' },
-        { label: 'Yeni Tür Ekle', path: '/admin/cekim-turleri/yeni' }
-      ]
-    },
-    { 
-      id: 'calendar', label: 'Çekim & Takvim', icon: Calendar,
-      children: [
-        { label: 'Takvim Görünümü', path: '/admin/takvim' },
-        { label: 'Çekim Listesi', path: '/admin/cekimler' },
-        { label: 'Yeni Çekim Oluştur', path: '/admin/cekimler/yeni' }
-      ]
-    },
+    { id: 'people', label: 'Kişi Yönetimi', icon: Users, path: '/admin/kisiler' },
+    { id: 'companies', label: 'Firma Yönetimi', icon: Building2, path: '/admin/firmalar' },
+    { id: 'shoot-types', label: 'Çekim Türleri', icon: Camera, path: '/admin/cekim-turleri' },
+    { id: 'calendar', label: 'Çekim & Takvim', icon: Calendar, path: '/admin/cekimler' },
     { 
       id: 'packages', label: 'Paket Yönetimi', icon: Package,
       children: [
@@ -70,7 +46,9 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     },
     { id: 'reviews', label: 'Müşteri Yorumları', icon: MessageSquare, path: '/admin/yorumlar' },
     { id: 'tasks', label: 'Not & Görevler', icon: ClipboardList, path: '/admin/gorevler' },
-    { id: 'payments', label: 'Ödeme & Fatura', icon: DollarSign, path: '/admin/odemeler' },
+    { id: 'payments', label: 'Ödeme & Fatura', icon: TurkishLira, path: '/admin/odemeler' },
+    { id: 'reports', label: 'Raporlar & Grafikler', icon: BarChart3, path: '/admin/raporlar' },
+    { id: 'database', label: 'Veritabanı Güncelle', icon: Settings, path: '/admin/veritabani-guncelle' },
     { id: 'website', label: 'Web Sitesine Git', icon: ExternalLink, path: '/', external: true },
   ];
 

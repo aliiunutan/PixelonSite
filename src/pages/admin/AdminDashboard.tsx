@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { 
   TrendingUp, Calendar as CalendarIcon, Camera, Scissors, 
-  ArrowUpRight, ArrowDownRight, MoreVertical, DollarSign, ExternalLink 
+  ArrowUpRight, ArrowDownRight, MoreVertical, TurkishLira, ExternalLink 
 } from 'lucide-react';
 import CalendarComponent from '../../components/CalendarComponent';
 import { useNavigate, Link } from 'react-router-dom';
@@ -58,7 +58,7 @@ const AdminDashboard = () => {
           <div key={i} className="card p-6">
             <div className="flex justify-between items-start mb-4">
               <div className={`p-2 rounded-lg bg-${stat.color}-50 text-${stat.color}-600`} style={{ backgroundColor: `var(--theme-${stat.color})15`, color: `var(--theme-${stat.color})` }}>
-                {i === 0 ? <TrendingUp size={20} /> : i === 1 ? <DollarSign size={20} /> : i === 2 ? <Camera size={20} /> : <Scissors size={20} />}
+                {i === 0 ? <TrendingUp size={20} /> : i === 1 ? <TurkishLira size={20} /> : i === 2 ? <Camera size={20} /> : <Scissors size={20} />}
               </div>
               <button className="text-slate-400 hover:text-slate-600">
                 <MoreVertical size={16} />

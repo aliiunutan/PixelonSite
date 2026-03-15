@@ -25,6 +25,8 @@ import ReviewsAdminPage from './pages/admin/ReviewsAdminPage';
 import PackagesPage from './pages/admin/PackagesPage';
 import PaymentsPage from './pages/admin/PaymentsPage';
 import FirmPricingPage from './pages/admin/FirmPricingPage';
+import ReportsPage from './pages/admin/ReportsPage';
+import DatabaseUpdatePage from './pages/admin/DatabaseUpdatePage';
 import CalendarComponent from './components/CalendarComponent';
 
 const Placeholder = ({ title }: { title: string }) => (
@@ -65,6 +67,8 @@ export default function App() {
           <Route path="/admin/yorumlar" element={<AdminLayout><ReviewsAdminPage /></AdminLayout>} />
           <Route path="/admin/gorevler" element={<AdminLayout><TasksPage /></AdminLayout>} />
           <Route path="/admin/odemeler" element={<AdminLayout><PaymentsPage /></AdminLayout>} />
+          <Route path="/admin/raporlar" element={<AdminLayout><ReportsPage /></AdminLayout>} />
+          <Route path="/admin/veritabani-guncelle" element={<AdminLayout><DatabaseUpdatePage /></AdminLayout>} />
         </Routes>
       </Router>
     </ThemeProvider>
